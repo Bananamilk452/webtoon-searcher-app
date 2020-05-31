@@ -14,11 +14,17 @@ export default {
       isSetting: false,
       settingAnimation: 'animate__bounceIn',
       providerList: [
-        { name: '네이버 웹툰', slug: 'NaverWebtoon', checked: true },
+        {
+          name: '네이버 웹툰', slug: 'NaverWebtoon', checked: true, color: '#00D464',
+        },
         // { name: '다음 웹툰', slug: 'DaumWebtoon', checked: true },
-        { name: '레진코믹스', slug: 'LezhinComics', checked: true },
-        // { name: '카카오페이지', slug: 'KakaoPage', checked: true },
-        { name: '미스터블루', slug: 'MrBlue', checked: true },
+        {
+          name: '레진코믹스', slug: 'LezhinComics', checked: true, color: '#E01E00',
+        },
+        // { name: '카카오페이지', slug: 'KakaoPage', checked: true, color: '#FFD200' },
+        {
+          name: '미스터블루', slug: 'MrBlue', checked: true, color: '#2F6AAF',
+        },
       ],
     };
   },
@@ -63,6 +69,7 @@ export default {
 .ui.container {
   text-align: center;
   padding-top: 32px;
+  background-color: white;
 }
 
 .ui.button {

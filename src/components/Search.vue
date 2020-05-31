@@ -10,8 +10,9 @@
         p#mod-count {{ v.updatedAt }}
         #mod-des {{ v.genre }} / 작가 {{ v.author }}
           #mod-explicit {{ isExplicit(v.explicit) }}
+        #mod-des(:style="providerColor(v.provider)") {{ providerName(v.provider) }}
       #mod-right
-        #mod-button-wrapper
+        a#mod-button-wrapper(:href="v.link" target="_blank" rel="noopener noreferrer")
           sui-button 바로가기
 </template>
 
@@ -60,6 +61,12 @@ export default {
     isExplicit(v) {
       if (v) return ' (19)';
       return '';
+    },
+    providerColor(v) {
+      return `color: ${this.providerList.find((obj) => obj.slug === v).color}; font-weight: 600;`;
+    },
+    providerName(v) {
+      return this.providerList.find((obj) => obj.slug === v).name;
     },
   },
 };
