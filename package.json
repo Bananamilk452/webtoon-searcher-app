@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "animate.css": "^4.1.0",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "debounce": "^1.2.0",
+    "querystring": "^0.2.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.10.1",
     "vue": "^2.6.11",

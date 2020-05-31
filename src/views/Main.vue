@@ -1,27 +1,24 @@
-<template lang="pug">
-  #main
-    sui-container
-      h2(is="sui-header") webtoon-searcher
-      sui-input(placeholder="검색어" icon="search" v-model="searchQuery")
-      sui-button(content="검색 설정" icon="setting" label-position="right" @click="clickSetting()")
-      .animate__animated#setting-container(v-if="isSetting" :class="settingAnimation")
-        sui-checkbox(v-for="(val, i) of providerList" :label="val.name" v-model="val.slug" :key="i")
-      sui-divider
-</template>
-
 <script>
+import Search from '@/components/Search.vue';
+import debounce from 'debounce';
+
 export default {
   name: 'Main',
+  components: {
+    Search,
+  },
   data() {
     return {
       searchQuery: '',
+      debouncedInput: '',
       isSetting: false,
       settingAnimation: 'animate__bounceIn',
       providerList: [
-        { name: '네이버 웹툰', slug: 'naverwebtoon' },
-        { name: '다음 웹툰', slug: 'daumwebtoon' },
-        { name: '레진코믹스', slug: 'lezhincomics' },
-        { name: '카카오페이지', slug: 'kakaopage' },
+        { name: '네이버 웹툰', slug: 'NaverWebtoon', checked: true },
+        // { name: '다음 웹툰', slug: 'DaumWebtoon', checked: true },
+        { name: '레진코믹스', slug: 'LezhinComics', checked: true },
+        // { name: '카카오페이지', slug: 'KakaoPage', checked: true },
+        { name: '미스터블루', slug: 'MrBlue', checked: true },
       ],
     };
   },
@@ -37,9 +34,30 @@ export default {
         this.isSetting = !this.isSetting;
       }
     },
+    assignQuery() {
+      if (this.searchQuery === '') return;
+      this.debouncedInput = this.searchQuery;
+    },
+  },
+  watch: {
+    // arrow function 시 this가 작동 안 함
+    // eslint-disable-next-line func-names
+    searchQuery: debounce(function () { this.assignQuery(); }, 1000),
   },
 };
 </script>
+
+<template lang="pug">
+  #main
+    sui-container
+      h2(is="sui-header") webtoon-searcher
+      sui-input(placeholder="검색어" icon="search" v-model.trim="searchQuery" @keyup.enter="assignQuery")
+      sui-button(content="검색 설정" icon="setting" label-position="right" @click="clickSetting()")
+      .animate__animated#setting-container(v-if="isSetting" :class="settingAnimation")
+        sui-checkbox(v-for="(val, i) of providerList" :label="val.name" v-model="val.checked" :key="i")
+      sui-divider
+      Search(:searchInput="debouncedInput" :providerList="providerList")
+</template>
 
 <style scoped>
 .ui.container {
